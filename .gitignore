@@ -1,0 +1,8 @@
+.terraform
+.terraform/*
+terraform-provider-fakewebservices
+
+# To help with local development
+terraform.tfstate
+terraform.tfstate.backup
+crash.log
