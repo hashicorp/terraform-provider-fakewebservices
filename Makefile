@@ -8,6 +8,9 @@ build:
 
 test:
 	go test -v .
+	
+fmtcheck:
+	echo "Placeholder"
 
 plan:
 	@terraform plan
