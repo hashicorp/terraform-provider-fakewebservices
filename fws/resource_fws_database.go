@@ -17,12 +17,14 @@ func resourceFWSDatabase() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The name of the database.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"size": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The allocated size of the database in gigabytes.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 		},
 	}

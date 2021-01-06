@@ -17,12 +17,14 @@ func resourceFWSVpc() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The name of the VPC.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"cidr_block": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The range of IPv4 addresses for this VPC, in the form of a Classless Inter-Domain Routing (CIDR) block.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 		},
 	}

@@ -17,9 +17,11 @@ func resourceFWSLoadBalancer() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The name of the load balancer.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
+			// TODO
 			"connections": {
 				Type:     schema.TypeString,
 				Required: true,

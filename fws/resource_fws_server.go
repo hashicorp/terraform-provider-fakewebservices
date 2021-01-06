@@ -17,12 +17,14 @@ func resourceFWSServer() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The name of the server.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"type": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The server type.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 		},
 	}
