@@ -1,6 +1,6 @@
 module github.com/hashicorp/terraform-provider-fakewebservices
 
-go 1.14
+go 1.15
 
 require (
 	github.com/hashicorp/go-retryablehttp v0.6.8
