@@ -23,7 +23,7 @@ func resourceFWSDatabase() *schema.Resource {
 			},
 			"size": {
 				Description: "The allocated size of the database in gigabytes.",
-				Type:        schema.TypeString,
+				Type:        schema.TypeInt,
 				Required:    true,
 			},
 		},
@@ -34,11 +34,11 @@ func resourceFWSDatabaseCreate(d *schema.ResourceData, meta interface{}) error {
 	fwsClient := meta.(*client.Client)
 
 	name := d.Get("name").(string)
-	size := d.Get("size").(string)
+	size := d.Get("size").(int)
 
 	options := DatabaseCreateOptions{
 		Name: client.String(name),
-		Size: client.String(size),
+		Size: client.Int(size),
 	}
 
 	req, err := fwsClient.NewRequest("POST", "databases", &options)
@@ -92,11 +92,11 @@ func resourceFWSDatabaseUpdate(d *schema.ResourceData, meta interface{}) error {
 	fwsClient := meta.(*client.Client)
 
 	name := d.Get("name").(string)
-	size := d.Get("size").(string)
+	size := d.Get("size").(int)
 
 	options := DatabaseUpdateOptions{
 		Name: client.String(name),
-		Size: client.String(size),
+		Size: client.Int(size),
 	}
 
 	req, err := fwsClient.NewRequest(
@@ -145,7 +145,7 @@ func resourceFWSDatabaseDelete(d *schema.ResourceData, meta interface{}) error {
 type Database struct {
 	ID   string `jsonapi:"primary,fake-resources-databases"`
 	Name string `jsonapi:"attr,name,omitempty"`
-	Size string `jsonapi:"attr,size,omitempty"`
+	Size int    `jsonapi:"attr,size,omitempty"`
 }
 
 type DatabaseCreateOptions struct {
@@ -155,7 +155,7 @@ type DatabaseCreateOptions struct {
 	// A name to identify the database.
 	Name *string `jsonapi:"attr,name"`
 
-	Size *string `jsonapi:"attr,size"`
+	Size *int `jsonapi:"attr,size"`
 }
 
 type DatabaseUpdateOptions struct {
@@ -165,5 +165,5 @@ type DatabaseUpdateOptions struct {
 	// A name to identify the database.
 	Name *string `jsonapi:"attr,name"`
 
-	Size *string `jsonapi:"attr,size"`
+	Size *int `jsonapi:"attr,size"`
 }

@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/go-retryablehttp"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/svanharmelen/jsonapi"
 )
 
@@ -300,4 +301,26 @@ func checkResponseCode(r *http.Response) error {
 // String returns a pointer to the given string.
 func String(v string) *string {
 	return &v
+}
+
+// Int returns a pointer to the given int.
+func Int(v int) *int {
+	return &v
+}
+
+// ExpandStringList expands an []interface{} into a slice of strings
+func ExpandStringList(d []interface{}) []string {
+	vs := make([]string, 0, len(d))
+	for _, v := range d {
+		val, ok := v.(string)
+		if ok && val != "" {
+			vs = append(vs, v.(string))
+		}
+	}
+	return vs
+}
+
+// ExpandStringSet expands a set into a slice of strings
+func ExpandStringSet(d *schema.Set) []string {
+	return ExpandStringList(d.List())
 }

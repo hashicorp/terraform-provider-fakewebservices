@@ -26,6 +26,11 @@ func resourceFWSServer() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 			},
+			"vpc": {
+				Description: "The name of the VPC to deploy this server in.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 		},
 	}
 }
@@ -35,10 +40,12 @@ func resourceFWSServerCreate(d *schema.ResourceData, meta interface{}) error {
 
 	name := d.Get("name").(string)
 	serverType := d.Get("type").(string)
+	vpc := d.Get("vpc").(string)
 
 	options := ServerCreateOptions{
-		Name:       client.String(name),
-		ServerType: client.String(serverType),
+		Name: client.String(name),
+		Type: client.String(serverType),
+		VPC:  client.String(vpc),
 	}
 
 	req, err := fwsClient.NewRequest("POST", "servers", &options)
@@ -84,6 +91,8 @@ func resourceFWSServerRead(d *schema.ResourceData, meta interface{}) error {
 
 	// Update the config.
 	d.Set("name", server.Name)
+	d.Set("type", server.Type)
+	d.Set("vpc", server.VPC)
 
 	return nil
 }
@@ -93,10 +102,12 @@ func resourceFWSServerUpdate(d *schema.ResourceData, meta interface{}) error {
 
 	name := d.Get("name").(string)
 	serverType := d.Get("type").(string)
+	vpc := d.Get("vpc").(string)
 
 	options := ServerUpdateOptions{
-		Name:       client.String(name),
-		ServerType: client.String(serverType),
+		Name: client.String(name),
+		Type: client.String(serverType),
+		VPC:  client.String(vpc),
 	}
 
 	req, err := fwsClient.NewRequest(
@@ -143,25 +154,27 @@ func resourceFWSServerDelete(d *schema.ResourceData, meta interface{}) error {
 }
 
 type Server struct {
-	ID         string `jsonapi:"primary,fake-resources-servers"`
-	Name       string `jsonapi:"attr,name,omitempty"`
-	ServerType string `jsonapi:"attr,server_type,omitempty"`
+	ID string `jsonapi:"primary,fake-resources-servers"`
+
+	Name string `jsonapi:"attr,name,omitempty"`
+	Type string `jsonapi:"attr,server-type,omitempty"`
+	VPC  string `jsonapi:"attr,vpc,omitempty"`
 }
 
 type ServerCreateOptions struct {
 	// For internal use only!
 	ID string `jsonapi:"primary,fake-resources-servers"`
 
-	// A name to identify the server.
-	Name       *string `jsonapi:"attr,name"`
-	ServerType *string `jsonapi:"attr,server_type"`
+	Name *string `jsonapi:"attr,name"`
+	Type *string `jsonapi:"attr,server-type"`
+	VPC  *string `jsonapi:"attr,vpc"`
 }
 
 type ServerUpdateOptions struct {
 	// For internal use only!
 	ID string `jsonapi:"primary,fake-resources-servers"`
 
-	// A name to identify the server.
-	Name       *string `jsonapi:"attr,name"`
-	ServerType *string `jsonapi:"attr,server_type"`
+	Name *string `jsonapi:"attr,name"`
+	Type *string `jsonapi:"attr,server-type"`
+	VPC  *string `jsonapi:"attr,vpc"`
 }

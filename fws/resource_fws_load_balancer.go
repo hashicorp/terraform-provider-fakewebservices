@@ -21,10 +21,12 @@ func resourceFWSLoadBalancer() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 			},
-			// TODO
-			"connections": {
-				Type:     schema.TypeString,
-				Required: true,
+			"servers": {
+				Description: "A list of server names to attach to the load balancer.",
+				Type:        schema.TypeSet,
+				Optional:    true,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Set:         schema.HashString,
 			},
 		},
 	}
@@ -34,11 +36,11 @@ func resourceFWSLoadBalancerCreate(d *schema.ResourceData, meta interface{}) err
 	fwsClient := meta.(*client.Client)
 
 	name := d.Get("name").(string)
-	connections := d.Get("connections").(string)
+	servers := client.ExpandStringSet(d.Get("servers").(*schema.Set))
 
 	options := LoadBalancerCreateOptions{
-		Name:        client.String(name),
-		Connections: client.String(connections),
+		Name:    client.String(name),
+		Servers: &servers,
 	}
 
 	req, err := fwsClient.NewRequest("POST", "load_balancers", &options)
@@ -92,11 +94,11 @@ func resourceFWSLoadBalancerUpdate(d *schema.ResourceData, meta interface{}) err
 	fwsClient := meta.(*client.Client)
 
 	name := d.Get("name").(string)
-	connections := d.Get("connections").(string)
+	servers := client.ExpandStringSet(d.Get("servers").(*schema.Set))
 
 	options := LoadBalancerUpdateOptions{
-		Name:        client.String(name),
-		Connections: client.String(connections),
+		Name:    client.String(name),
+		Servers: &servers,
 	}
 
 	req, err := fwsClient.NewRequest(
@@ -143,27 +145,23 @@ func resourceFWSLoadBalancerDelete(d *schema.ResourceData, meta interface{}) err
 }
 
 type LoadBalancer struct {
-	ID          string `jsonapi:"primary,fake-resources-load-balancers"`
-	Name        string `jsonapi:"attr,name,omitempty"`
-	Connections string `jsonapi:"attr,connections,omitempty"`
+	ID      string   `jsonapi:"primary,fake-resources-load-balancers"`
+	Name    string   `jsonapi:"attr,name,omitempty"`
+	Servers []string `jsonapi:"attr,servers,omitempty"`
 }
 
 type LoadBalancerCreateOptions struct {
 	// For internal use only!
 	ID string `jsonapi:"primary,fake-resources-load-balancers"`
 
-	// A name to identify the load_balancer.
-	Name *string `jsonapi:"attr,name"`
-
-	Connections *string `jsonapi:"attr,connections"`
+	Name    *string   `jsonapi:"attr,name"`
+	Servers *[]string `jsonapi:"attr,servers"`
 }
 
 type LoadBalancerUpdateOptions struct {
 	// For internal use only!
 	ID string `jsonapi:"primary,fake-resources-load-balancers"`
 
-	// A name to identify the load_balancer.
-	Name *string `jsonapi:"attr,name"`
-
-	Connections *string `jsonapi:"attr,connections"`
+	Name    *string   `jsonapi:"attr,name"`
+	Servers *[]string `jsonapi:"attr,servers"`
 }
