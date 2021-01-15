@@ -16,7 +16,7 @@ description: |-
 ### Required
 
 - **name** (String) The name of the database.
-- **size** (String) The allocated size of the database in gigabytes.
+- **size** (Number) The allocated size of the database in gigabytes.
 
 ### Optional
 

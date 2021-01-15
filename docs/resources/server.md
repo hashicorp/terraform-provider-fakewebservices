@@ -21,5 +21,6 @@ description: |-
 ### Optional
 
 - **id** (String) The ID of this resource.
+- **vpc** (String) The name of the VPC to deploy this server in.
 
 
