@@ -1,4 +1,4 @@
-## 0.2.1 (Unreleased)
+## 0.2.1 (January 15, 2021)
 
 Updated documentation only
 
