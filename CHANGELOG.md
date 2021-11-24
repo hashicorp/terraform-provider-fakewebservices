@@ -1,4 +1,4 @@
-## 0.2.2 (Unreleased)
+## 0.2.2 (November 24, 2021)
 
 Added support for darwin/arm64
 
