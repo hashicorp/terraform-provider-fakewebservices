@@ -1,6 +1,10 @@
+## 0.2.3 (Unreleased)
+
+Added support for darwin_arm64
+
 ## 0.2.2 (November 24, 2021)
 
-Added support for darwin/arm64
+Updated go version to support new arch
 
 ## 0.2.1 (January 15, 2021)
 
