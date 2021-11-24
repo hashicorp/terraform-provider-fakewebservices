@@ -1,3 +1,7 @@
+## 0.2.2 (November 24, 2021)
+
+Added support for darwin/arm64
+
 ## 0.2.1 (January 15, 2021)
 
 Updated documentation only
