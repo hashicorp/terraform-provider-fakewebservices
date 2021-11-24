@@ -1,6 +1,6 @@
 module github.com/hashicorp/terraform-provider-fakewebservices
 
-go 1.15
+go 1.16
 
 require (
 	github.com/armon/go-radix v1.0.0 // indirect
