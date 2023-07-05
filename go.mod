@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/armon/go-radix v1.0.0 // indirect
-	github.com/aws/aws-sdk-go v1.31.9 // indirect
+	github.com/aws/aws-sdk-go v1.34.0 // indirect
 	github.com/hashicorp/go-getter v1.5.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.6.8
 	github.com/hashicorp/hcl/v2 v2.8.2 // indirect
